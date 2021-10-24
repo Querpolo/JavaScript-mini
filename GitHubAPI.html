@@ -1,0 +1,166 @@
+<html>
+<head>
+
+    <title>Vremea</title>
+
+</head>
+<style>
+#main {
+    padding: 20px;
+    margin: 0 auto;
+    border: 1px solid black;
+}
+
+#nume_oras {
+    font-size: 20px;    
+    clear: both;
+}
+
+#conditie {
+    float: left;
+}
+
+#vreme div {
+    font-size: 18px;
+    padding: 5px;
+}
+   
+
+</style>
+<body>  
+    
+    <div id="main">
+        <div id="id">ID: null</div>
+        <input type="text" id="profile">
+        <button type="button" id="search" onclick="search()">search</button>
+        <div id="conditie">
+            <img id="avatar"  width=150/>
+        </div>
+
+        <div id="vreme">
+            <div id="name">Nume: null</div>            
+            <div id="url">URL: null</div>
+            <div id="type">Type: null</div>
+            <div id="email">E-mail: null</div>
+        </div>
+
+    </div>
+    
+
+    <script>
+let json;
+        var tempBucharest = {
+            conditie: "soare",
+            name: 24.5,
+            URL: 18,
+            type: 25.2,
+            email: 1.5,
+            id: 665564,
+        };
+
+        
+
+
+        
+        
+var url = "https://api.github.com/users/";
+
+function displayObject(a)
+    {
+        var indicatori = [
+
+            {
+                id: "name",
+                prop: "name",
+                label: "Nume: "
+            },
+            {
+                id: "url",
+                prop: "url",
+                label: "URL: "
+            },
+            {
+                id: "type",
+                prop: "type",
+                label: "Type: "
+            },
+            {
+                id: "email",
+                prop: "email",
+                label: "Email: "
+            },
+            {
+                id: "id",
+                prop: "id",
+                label: "ID: "
+            },
+
+        ];
+
+
+        var nameHandler = document.getElementById("name");
+        nameHandler.innerHTML = "Nume: " + json.name;
+
+        var urlHandler = document.getElementById("url");
+        urlHandler.innerHTML = "URL: " + json.url;
+
+        var typeHandler = document.getElementById("type");
+        typeHandler.innerHTML = "Type: " + json.type;
+
+        var emailHandler = document.getElementById("email");
+        emailHandler.innerHTML = "E-Mail: " + json.email;
+
+        var idHandler = document.getElementById("id");
+        idHandler.innerHTML = "ID: " + json.id;
+        
+        // var img = document.createElement("img");
+ 
+        // img.src = json.avatar_url;
+        // var src = document.getElementById("avatar");
+ 
+        // src.appendChild(img);
+
+        // console.log(json.avatar_url)
+
+        document.getElementById("avatar").src = json.avatar_url;
+    }
+
+
+
+function search()
+{
+    let valoareInput = document.getElementById("profile").value;
+    var urlNou = url + valoareInput;
+    info(urlNou)
+}
+
+
+function info(urlfull)
+{
+    var r = new XMLHttpRequest();
+
+
+r.open("GET", urlfull);
+r.onload = function()
+    {
+        json = JSON.parse(r.response);   
+        console.log(json.name);
+        displayObject(json.name);
+
+    }
+
+r.send();   
+}
+
+
+
+        
+
+
+
+        
+
+    </script>
+
+</body>
+</html>

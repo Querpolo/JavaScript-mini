@@ -1,0 +1,104 @@
+<head></head>
+
+<style>
+#main
+{
+    padding: 20px;
+    border: 1px solid black;
+    height:250px;
+}
+
+#vreme
+{
+    justify-content: right;
+    margin-left: 250px;
+    margin-top: -200px;
+}
+</style>
+
+
+<body>
+<div id="main">
+    <div id="nume_oras">Bucuresti</div>
+    <div id="conditie">
+        <img src="sun.png" />
+    </div>
+
+    <div id="vreme">
+        <div id="temp">27.5</div>
+        <div id="min">22.3</div>
+        <div id="max">29.6</div>
+        <div id="humidity">0.55</div>
+    </div>
+</div>
+</body>
+
+
+<script>
+
+    var tempBucharest = 
+    {
+        conditie: "soare",
+        temp: 22.5,
+        min:18,
+        max:25.2,
+        humidity:1.5
+    };
+
+    var indicatori = [
+        {
+            id: "temp",
+            prop: "temp",
+            label: "Temp: "
+        },
+        {
+            id: "min",
+            prop: "min",
+            label: "Min: "
+        },
+        {
+            id: "max",
+            prop: "max",
+            label: "Max: "
+        },
+        {
+            id: "humidity",
+            prop: "humidityd",
+            label: "Humidity: "
+        },
+    ];
+
+    // indicatori.forEach(function(val)
+    // {
+    //     document.getElementById(val.id).innerHTML = val.label + tempBucharest[val.prop];
+    // });
+    
+    var url = "https://api.openweathermap.org/data/2.5/weather?q=Bucharest&appid=f9e368e2189db945c70e14e38b7f7575&units=metric"
+    
+    var request = new XMLHttpRequest();
+
+    request.open("GET", url);
+
+    request.onload = function()
+    {
+        let json = (JSON.parse(request.response));
+        console.log(json.main.temp);
+        indicatori[0].prop = json.main.temp;
+        indicatori[1].prop = json.main.temp_min;
+        indicatori[2].prop = json.main.temp_max;
+        indicatori[3].prop = json.main.humidity;
+
+        indicatori.forEach(function(val)
+    {
+        document.getElementById(val.id).innerHTML = val.label + val.prop;
+    });
+    }
+
+    request.send();
+
+
+    //mere la toate daca schimb temp cu "min/max/ce o mai fi"
+//   var tempHandler = document.getElementById("temp");
+//   tempHandler.innerHTML = "Temp: " + tempBucharest.temp;
+
+</script>
